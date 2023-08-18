@@ -1,4 +1,4 @@
-test("jest実行角に尿テスト", () => {
+test("jest実行確認テスト", () => {
   expect(true).toBeTruthy();
 });
 

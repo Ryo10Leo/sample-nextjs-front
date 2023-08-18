@@ -1,0 +1,13 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - npm ci
+  pre_build:
+    commands:
+      - echo Test started
+      - npm run test
+      - npm run lint
