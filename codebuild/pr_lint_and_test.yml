@@ -8,6 +8,6 @@ phases:
       - npm ci
   pre_build:
     commands:
-      - echo Test Started
+      - echo Test started
       - npm run test
       - npm run lint
