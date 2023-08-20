@@ -11,4 +11,6 @@ COPY . .
 RUN npm run build && \
     npm ci --omit=dev
 
+EXPOSE 3000
+
 CMD [ "npm", "run", "start" ]
