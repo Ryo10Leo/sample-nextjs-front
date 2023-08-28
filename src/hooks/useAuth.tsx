@@ -2,20 +2,44 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { Amplify, Auth } from "aws-amplify";
 import { AmplifyConf } from "../app/config/auth";
 
+type AuthContextType = {
+  isLoading: boolean;
+  isAuthenticated: boolean;
+  username: string;
+  signIn: (
+    username: string,
+    password: string,
+  ) => Promise<{
+    success: boolean;
+    message: string;
+  }>;
+  signOut: () => Promise<{ success: boolean; message: string }>;
+};
+
 Amplify.configure({ ...AmplifyConf });
 
-const authContext = createContext({});
+const createCtx = () => {
+  const ctx = createContext<AuthContextType | undefined>(undefined);
+  function useAuthContext() {
+    const c = useContext(ctx);
+    if (!c) throw new Error("useCtx must be inside a Provider with a value");
+    return c;
+  }
+  return [useAuthContext, ctx.Provider] as const;
+};
+
+const [useAuthContext, SetAuthProvider] = createCtx();
 
 export const ProvideAuth = ({ children }: { children: React.ReactNode }) => {
   const auth = useProvideAuth();
-  return <authContext.Provider value={auth}>{children}</authContext.Provider>;
+  return <SetAuthProvider value={auth}>{children}</SetAuthProvider>;
 };
 
 export const useAuth = () => {
-  return useContext(authContext);
+  return useAuthContext();
 };
 
-const useProvideAuth = () => {
+const useProvideAuth = (): AuthContextType => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState("");
