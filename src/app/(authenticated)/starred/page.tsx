@@ -1,9 +1,10 @@
-import * as React from "react";
+"use client";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { withAuthenticator } from "@aws-amplify/ui-react";
 
-export default function TasksPage() {
+const StarredPage = () => {
   return (
     <Container>
       <Box
@@ -15,9 +16,11 @@ export default function TasksPage() {
         }}
       >
         <Typography variant="body1" gutterBottom>
-          Tasks Page
+          Starred Page
         </Typography>
       </Box>
     </Container>
   );
-}
+};
+
+export default withAuthenticator(StarredPage);
