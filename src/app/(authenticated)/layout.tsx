@@ -18,6 +18,7 @@ import ChecklistIcon from "@mui/icons-material/Checklist";
 import SettingsIcon from "@mui/icons-material/Settings";
 import SupportIcon from "@mui/icons-material/Support";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { useAuth } from "@/hooks/useAuth";
 
 const DRAWER_WIDTH = 240;
 
@@ -34,6 +35,17 @@ const PLACEHOLDER_LINKS = [
 ];
 
 export default function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
+  const { isAuthenticated, isLoading, toLoginPage } = useAuth();
+
+  if (isLoading) {
+    return null;
+  }
+
+  if (!isAuthenticated) {
+    toLoginPage();
+    return;
+  }
+
   return (
     <>
       <AppBar position="fixed" sx={{ zIndex: 2000 }}>

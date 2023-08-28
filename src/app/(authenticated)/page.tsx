@@ -8,8 +8,6 @@ import ListItem from "@mui/material/ListItem";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import MediaCard from "../components/MediaCard";
-import { withAuthenticator } from "@aws-amplify/ui-react";
-import "@aws-amplify/ui-react/styles.css";
 
 const HomePage = () => {
   return (
@@ -78,5 +76,4 @@ const HomePage = () => {
   );
 };
 
-// TODO: カスタムフックで認証する
-export default withAuthenticator(HomePage);
+export default HomePage;

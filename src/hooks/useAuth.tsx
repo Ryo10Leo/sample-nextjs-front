@@ -1,6 +1,8 @@
+"use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { Amplify, Auth } from "aws-amplify";
 import { AmplifyConf } from "../app/config/auth";
+import { useRouter } from "next/navigation";
 
 type AuthContextType = {
   isLoading: boolean;
@@ -14,6 +16,7 @@ type AuthContextType = {
     message: string;
   }>;
   signOut: () => Promise<{ success: boolean; message: string }>;
+  toLoginPage: () => void;
 };
 
 Amplify.configure({ ...AmplifyConf });
@@ -40,6 +43,7 @@ export const useAuth = () => {
 };
 
 const useProvideAuth = (): AuthContextType => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState("");
@@ -47,14 +51,14 @@ const useProvideAuth = (): AuthContextType => {
   useEffect(() => {
     Auth.currentAuthenticatedUser()
       .then((result) => {
+        setIsLoading(false);
         setUsername(result.username);
         setIsAuthenticated(true);
-        setIsLoading(false);
       })
       .catch(() => {
         setUsername("");
-        setIsAuthenticated(false);
         setIsLoading(false);
+        setIsAuthenticated(false);
       });
   }, []);
 
@@ -86,11 +90,19 @@ const useProvideAuth = (): AuthContextType => {
     }
   };
 
+  const toLoginPage = () => {
+    setUsername("");
+    setIsAuthenticated(false);
+    router.push("/login");
+    return;
+  };
+
   return {
     isLoading,
     isAuthenticated,
     username,
     signIn,
     signOut,
+    toLoginPage,
   };
 };
