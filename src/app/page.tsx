@@ -79,4 +79,5 @@ const HomePage = () => {
   );
 };
 
+// TODO: カスタムフックで認証する
 export default withAuthenticator(HomePage);
