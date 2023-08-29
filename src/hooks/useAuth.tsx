@@ -7,9 +7,9 @@ import { useRouter } from "next/navigation";
 type AuthContextType = {
   isLoading: boolean;
   isAuthenticated: boolean;
-  username: string;
+  userName: string;
   signIn: (
-    username: string,
+    userName: string,
     password: string,
   ) => Promise<{
     success: boolean;
@@ -42,30 +42,16 @@ export const useAuth = () => {
   return useAuthContext();
 };
 
-const useProvideAuth = (): AuthContextType => {
+export const useProvideAuth = (): AuthContextType => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [username, setUsername] = useState("");
-
-  useEffect(() => {
-    Auth.currentAuthenticatedUser()
-      .then((result) => {
-        setIsLoading(false);
-        setUsername(result.username);
-        setIsAuthenticated(true);
-      })
-      .catch(() => {
-        setUsername("");
-        setIsLoading(false);
-        setIsAuthenticated(false);
-      });
-  }, []);
+  const [userName, setUserName] = useState("");
 
   const signIn = async (username: string, password: string) => {
     try {
       const result = await Auth.signIn(username, password);
-      setUsername(result.username);
+      setUserName(result.username);
       setIsAuthenticated(true);
       return { success: true, message: "" };
     } catch (error) {
@@ -79,7 +65,7 @@ const useProvideAuth = (): AuthContextType => {
   const signOut = async () => {
     try {
       await Auth.signOut();
-      setUsername("");
+      setUserName("");
       setIsAuthenticated(false);
       return { success: true, message: "" };
     } catch (error) {
@@ -91,16 +77,32 @@ const useProvideAuth = (): AuthContextType => {
   };
 
   const toLoginPage = () => {
-    setUsername("");
+    setUserName("");
     setIsAuthenticated(false);
     router.push("/login");
     return;
   };
 
+  useEffect(() => {
+    const checkCurrentAuth = async () => {
+      try {
+        const result = await Auth.currentAuthenticatedUser();
+        setIsLoading(false);
+        setUserName(result.username);
+        setIsAuthenticated(true);
+      } catch (error) {
+        setUserName("");
+        setIsAuthenticated(false);
+        setIsLoading(false);
+      }
+    };
+    checkCurrentAuth();
+  }, []);
+
   return {
     isLoading,
     isAuthenticated,
-    username,
+    userName,
     signIn,
     signOut,
     toLoginPage,
