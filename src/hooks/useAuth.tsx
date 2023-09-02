@@ -86,8 +86,8 @@ export const useProvideAuth = (): AuthContextType => {
   useEffect(() => {
     const checkCurrentAuth = async () => {
       try {
-        const result = await Auth.currentAuthenticatedUser();
         setIsLoading(false);
+        const result = await Auth.currentAuthenticatedUser();
         setUserName(result.username);
         setIsAuthenticated(true);
       } catch (error) {
