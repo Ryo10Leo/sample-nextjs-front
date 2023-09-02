@@ -1,4 +1,5 @@
 "use client";
+
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
 import Drawer from "@mui/material/Drawer";
@@ -9,7 +10,7 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import MediaCard from "../components/MediaCard";
 
-const HomePage = () => {
+function HomePage() {
   return (
     <Box
       sx={{
@@ -74,6 +75,6 @@ const HomePage = () => {
       </Drawer>
     </Box>
   );
-};
+}
 
 export default HomePage;

@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from "@testing-library/react";
-import { useProvideAuth } from "./useAuth";
 import { Auth } from "aws-amplify";
+import { useProvideAuth } from "./useAuth";
 
 jest.mock("aws-amplify");
 jest.mock("next/navigation");
@@ -15,7 +15,7 @@ describe("useProvideAuth", () => {
               const currentUser = {
                 username: "test_user",
               };
-              return resolve(currentUser);
+              resolve(currentUser);
             }),
         );
       });
@@ -33,7 +33,7 @@ describe("useProvideAuth", () => {
         jest.spyOn(Auth, "currentAuthenticatedUser").mockImplementation(
           () =>
             new Promise((resolve) => {
-              return resolve(null);
+              resolve(null);
             }),
         );
       });
@@ -51,7 +51,7 @@ describe("useProvideAuth", () => {
         jest.spyOn(Auth, "currentAuthenticatedUser").mockImplementation(
           () =>
             new Promise((reject) => {
-              return reject(new Error("エラー"));
+              reject(new Error("エラー"));
             }),
         );
       });

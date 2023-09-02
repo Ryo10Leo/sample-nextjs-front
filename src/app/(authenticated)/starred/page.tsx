@@ -1,10 +1,11 @@
 "use client";
+
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 
-const StarredPage = () => {
+function StarredPage() {
   return (
     <Container>
       <Box
@@ -21,6 +22,6 @@ const StarredPage = () => {
       </Box>
     </Container>
   );
-};
+}
 
 export default withAuthenticator(StarredPage);

@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -43,7 +44,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
 
   if (!isAuthenticated) {
     toLoginPage();
-    return;
+    return null;
   }
 
   return (

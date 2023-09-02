@@ -1,14 +1,16 @@
-'use client';
-import * as React from 'react';
-import createCache from '@emotion/cache';
-import { useServerInsertedHTML } from 'next/navigation';
-import { CacheProvider as DefaultCacheProvider } from '@emotion/react';
-import type { EmotionCache, Options as OptionsOfCreateCache } from '@emotion/cache';
+"use client";
+
+import * as React from "react";
+import createCache from "@emotion/cache";
+import { useServerInsertedHTML } from "next/navigation";
+import { CacheProvider as DefaultCacheProvider } from "@emotion/react";
+import type { EmotionCache, Options as OptionsOfCreateCache } from "@emotion/cache";
 
 export type NextAppDirEmotionCacheProviderProps = {
   /** This is the options passed to createCache() from 'import createCache from "@emotion/cache"' */
-  options: Omit<OptionsOfCreateCache, 'insertionPoint'>;
+  options: Omit<OptionsOfCreateCache, "insertionPoint">;
   /** By default <CacheProvider /> from 'import { CacheProvider } from "@emotion/react"' */
+  // eslint-disable-next-line react/require-default-props
   CacheProvider?: (props: {
     value: EmotionCache;
     children: React.ReactNode;
@@ -48,7 +50,7 @@ export default function NextAppDirEmotionCacheProvider(props: NextAppDirEmotionC
     if (inserted.length === 0) {
       return null;
     }
-    let styles = '';
+    let styles = "";
     let dataEmotionAttribute = registry.cache.key;
 
     const globals: {
@@ -59,7 +61,7 @@ export default function NextAppDirEmotionCacheProvider(props: NextAppDirEmotionC
     inserted.forEach(({ name, isGlobal }) => {
       const style = registry.cache.inserted[name];
 
-      if (typeof style !== 'boolean') {
+      if (typeof style !== "boolean") {
         if (isGlobal) {
           globals.push({ name, style });
         } else {
@@ -70,7 +72,7 @@ export default function NextAppDirEmotionCacheProvider(props: NextAppDirEmotionC
     });
 
     return (
-      <React.Fragment>
+      <>
         {globals.map(({ name, style }) => (
           <style
             key={name}
@@ -86,7 +88,7 @@ export default function NextAppDirEmotionCacheProvider(props: NextAppDirEmotionC
             dangerouslySetInnerHTML={{ __html: styles }}
           />
         )}
-      </React.Fragment>
+      </>
     );
   });
 

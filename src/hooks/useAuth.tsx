@@ -1,8 +1,9 @@
 "use client";
+
 import { createContext, useContext, useEffect, useState } from "react";
 import { Amplify, Auth } from "aws-amplify";
-import { AmplifyConf } from "../app/config/auth";
 import { useRouter } from "next/navigation";
+import { AmplifyConf } from "../app/config/auth";
 
 type AuthContextType = {
   isLoading: boolean;
@@ -32,15 +33,6 @@ const createCtx = () => {
 };
 
 const [useAuthContext, SetAuthProvider] = createCtx();
-
-export const ProvideAuth = ({ children }: { children: React.ReactNode }) => {
-  const auth = useProvideAuth();
-  return <SetAuthProvider value={auth}>{children}</SetAuthProvider>;
-};
-
-export const useAuth = () => {
-  return useAuthContext();
-};
 
 export const useProvideAuth = (): AuthContextType => {
   const router = useRouter();
@@ -80,7 +72,6 @@ export const useProvideAuth = (): AuthContextType => {
     setUserName("");
     setIsAuthenticated(false);
     router.push("/login");
-    return;
   };
 
   useEffect(() => {
@@ -114,3 +105,10 @@ export const useProvideAuth = (): AuthContextType => {
     toLoginPage,
   };
 };
+
+export function ProvideAuth({ children }: { children: React.ReactNode }) {
+  const auth = useProvideAuth();
+  return <SetAuthProvider value={auth}>{children}</SetAuthProvider>;
+}
+
+export const useAuth = () => useAuthContext();
