@@ -9,6 +9,9 @@ const config = {
   moduleDirectories: ["node_modules", "<rootDir>/"],
   collectCoverageFrom: ["**/*.{ts,tsx}", "!**/*spec.{ts,tsx}", "!**/node_modules/**"],
   testEnvironment: "jest-environment-jsdom",
+  testEnvironmentOptions: {
+    customExportConditions: ["browser", "node"],
+  },
 };
 
 module.exports = createJestConfig(config);
