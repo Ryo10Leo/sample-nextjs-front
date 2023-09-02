@@ -90,6 +90,12 @@ export const useProvideAuth = (): AuthContextType => {
         const result = await Auth.currentAuthenticatedUser();
         setUserName(result.username);
         setIsAuthenticated(true);
+
+        if (!result.username) {
+          setUserName("");
+          setIsAuthenticated(false);
+          setIsLoading(false);
+        }
       } catch (error) {
         setUserName("");
         setIsAuthenticated(false);
