@@ -10,12 +10,13 @@ module.exports = {
   extends: [
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/stylistic",
+    "plugin:jsx-a11y/recommended",
     "next/core-web-vitals",
     "airbnb",
     "airbnb-typescript",
     "prettier",
   ],
-  plugins: ["@typescript-eslint/eslint-plugin"],
+  plugins: ["@typescript-eslint/eslint-plugin", "jsx-a11y"],
   rules: {
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
