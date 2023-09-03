@@ -19,7 +19,9 @@ export type NextAppDirEmotionCacheProviderProps = {
 };
 
 // Adapted from https://github.com/garronej/tss-react/blob/main/src/next/appDir.tsx
-export default function NextAppDirEmotionCacheProvider(props: NextAppDirEmotionCacheProviderProps) {
+const NextAppDirEmotionCacheProvider = (
+  props: NextAppDirEmotionCacheProviderProps,
+): JSX.Element => {
   const { options, CacheProvider = DefaultCacheProvider, children } = props;
 
   const [registry] = React.useState(() => {
@@ -27,7 +29,7 @@ export default function NextAppDirEmotionCacheProvider(props: NextAppDirEmotionC
     cache.compat = true;
     const prevInsert = cache.insert;
     let inserted: { name: string; isGlobal: boolean }[] = [];
-    cache.insert = (...args) => {
+    cache.insert = (...args): string | void => {
       const [selector, serialized] = args;
       if (cache.inserted[serialized.name] === undefined) {
         inserted.push({
@@ -37,7 +39,10 @@ export default function NextAppDirEmotionCacheProvider(props: NextAppDirEmotionC
       }
       return prevInsert(...args);
     };
-    const flush = () => {
+    const flush = (): {
+      name: string;
+      isGlobal: boolean;
+    }[] => {
       const prevInserted = inserted;
       inserted = [];
       return prevInserted;
@@ -93,4 +98,6 @@ export default function NextAppDirEmotionCacheProvider(props: NextAppDirEmotionC
   });
 
   return <CacheProvider value={registry.cache}>{children}</CacheProvider>;
-}
+};
+
+export default NextAppDirEmotionCacheProvider;

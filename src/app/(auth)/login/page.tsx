@@ -11,11 +11,11 @@ import Container from "@mui/material/Container";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../../hooks/useAuth";
 
-export default function SignIn(): JSX.Element {
+export const SignIn = (): JSX.Element => {
   const router = useRouter();
   const { signIn } = useAuth();
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -78,4 +78,6 @@ export default function SignIn(): JSX.Element {
       </Box>
     </Container>
   );
-}
+};
+
+export default SignIn;
