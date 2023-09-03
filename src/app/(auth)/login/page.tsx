@@ -1,4 +1,5 @@
 "use client";
+
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -7,14 +8,14 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useAuth } from "../../../hooks/useAuth";
 import { useRouter } from "next/navigation";
+import { useAuth } from "../../../hooks/useAuth";
 
-export default function SignIn() {
+export const SignIn = (): JSX.Element => {
   const router = useRouter();
   const { signIn } = useAuth();
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -68,8 +69,8 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
+              <Link href="/" variant="body2">
+                Don&apos;t have an account? Sign Up
               </Link>
             </Grid>
           </Grid>
@@ -77,4 +78,6 @@ export default function SignIn() {
       </Box>
     </Container>
   );
-}
+};
+
+export default SignIn;
